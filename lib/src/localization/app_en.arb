@@ -1,0 +1,6 @@
+{
+  "appTitle": "uuid_short_web",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
