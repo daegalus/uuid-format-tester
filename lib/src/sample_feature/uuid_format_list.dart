@@ -27,6 +27,7 @@ class _UUIDFormatListView extends State<UUIDFormatList> {
   String b48Alphabet = "ABCDEFGHJKLMNOPQRSTVWXYZabcdefghijkmnopqrstvwxyz";
   String b52Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   final ScrollController _scrollController = ScrollController();
+  final ScrollController _hScrollController = ScrollController();
 
   _UUIDFormatListView() {
     // Sanity check base UUID based on https://github.com/uuid6/new-uuid-encoding-techniques-ietf-draft/blob/master/TRADEOFFS.md#summary-of-concerns-and-tradeoffs
@@ -153,75 +154,91 @@ class _UUIDFormatListView extends State<UUIDFormatList> {
                         ),
                       ],
                     )),
-                DataTable(
-                  dataRowMaxHeight: double.infinity,
-                  columns: const [
-                    DataColumn(label: SelectableText('UUID')),
-                    DataColumn(label: SelectableText('base32')),
-                    DataColumn(label: SelectableText('base36')),
-                    DataColumn(label: SelectableText('base48')),
-                    DataColumn(label: SelectableText('base52')),
-                    DataColumn(label: SelectableText('base58')),
-                    DataColumn(label: SelectableText('base62')),
-                    DataColumn(label: SelectableText('base64')),
-                  ],
-                  rows: items
-                      .map((item) => DataRow(cells: [
-                            DataCell(SelectableText(item.uuid)),
-                            //DataCell(SelectableText(item.b32.toString())),
-                            DataCell(DataTable(
-                              columns: const [
-                                DataColumn(label: Text("variant")),
-                                DataColumn(label: Text("hash"))
-                              ],
-                              rows: [
-                                DataRow(cells: [
-                                  const DataCell(Text("hex")),
-                                  DataCell(SelectableText(item.b32.b32hex))
-                                ]),
-                                DataRow(cells: [
-                                  const DataCell(Text("crockford")),
-                                  DataCell(SelectableText(item.b32.crockford))
-                                ]),
-                                DataRow(cells: [
-                                  const DataCell(Text("rfc4648")),
-                                  DataCell(SelectableText(item.b32.rfc4648))
-                                ]),
-                                DataRow(cells: [
-                                  const DataCell(Text("geohash")),
-                                  DataCell(SelectableText(item.b32.geohash))
-                                ]),
-                                DataRow(cells: [
-                                  const DataCell(Text("zbase")),
-                                  DataCell(SelectableText(item.b32.zbase))
-                                ]),
-                              ],
-                            )),
-                            DataCell(SelectableText(item.b36)),
-                            DataCell(SelectableText(item.b48)),
-                            DataCell(SelectableText(item.b52)),
-                            DataCell(SelectableText(item.b58)),
-                            DataCell(SelectableText(item.b62)),
-                            //DataCell(SelectableText(item.b64.toString())),
-                            DataCell(DataTable(
-                              columns: const [
-                                DataColumn(label: Text("variant")),
-                                DataColumn(label: Text("hash"))
-                              ],
-                              rows: [
-                                DataRow(cells: [
-                                  const DataCell(Text("standard")),
-                                  DataCell(SelectableText(item.b64.base64))
-                                ]),
-                                DataRow(cells: [
-                                  const DataCell(Text("urlsafe")),
-                                  DataCell(SelectableText(item.b64.base64url))
-                                ]),
-                              ],
-                            )),
-                          ]))
-                      .toList(),
-                ),
+                Scrollbar(
+                    controller: _hScrollController,
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        controller: _hScrollController,
+                        child: DataTable(
+                          dataRowMaxHeight: double.infinity,
+                          columns: const [
+                            DataColumn(label: SelectableText('UUID')),
+                            DataColumn(label: SelectableText('base32')),
+                            DataColumn(label: SelectableText('base36')),
+                            DataColumn(label: SelectableText('base48')),
+                            DataColumn(label: SelectableText('base52')),
+                            DataColumn(label: SelectableText('base58')),
+                            DataColumn(label: SelectableText('base62')),
+                            DataColumn(label: SelectableText('base64')),
+                          ],
+                          rows: items
+                              .map((item) => DataRow(cells: [
+                                    DataCell(SelectableText(item.uuid)),
+                                    //DataCell(SelectableText(item.b32.toString())),
+                                    DataCell(DataTable(
+                                      headingRowHeight: 0.0,
+                                      dividerThickness: 0.0,
+                                      columns: const [
+                                        DataColumn(label: Text("variant")),
+                                        DataColumn(label: Text("hash"))
+                                      ],
+                                      rows: [
+                                        DataRow(cells: [
+                                          const DataCell(Text("hex")),
+                                          DataCell(
+                                              SelectableText(item.b32.b32hex))
+                                        ]),
+                                        DataRow(cells: [
+                                          const DataCell(Text("crockford")),
+                                          DataCell(SelectableText(
+                                              item.b32.crockford))
+                                        ]),
+                                        DataRow(cells: [
+                                          const DataCell(Text("rfc4648")),
+                                          DataCell(
+                                              SelectableText(item.b32.rfc4648))
+                                        ]),
+                                        DataRow(cells: [
+                                          const DataCell(Text("geohash")),
+                                          DataCell(
+                                              SelectableText(item.b32.geohash))
+                                        ]),
+                                        DataRow(cells: [
+                                          const DataCell(Text("zbase")),
+                                          DataCell(
+                                              SelectableText(item.b32.zbase))
+                                        ]),
+                                      ],
+                                    )),
+                                    DataCell(SelectableText(item.b36)),
+                                    DataCell(SelectableText(item.b48)),
+                                    DataCell(SelectableText(item.b52)),
+                                    DataCell(SelectableText(item.b58)),
+                                    DataCell(SelectableText(item.b62)),
+                                    //DataCell(SelectableText(item.b64.toString())),
+                                    DataCell(DataTable(
+                                      headingRowHeight: 0,
+                                      dividerThickness: 0,
+                                      columns: const [
+                                        DataColumn(label: Text("variant")),
+                                        DataColumn(label: Text("hash"))
+                                      ],
+                                      rows: [
+                                        DataRow(cells: [
+                                          const DataCell(Text("standard")),
+                                          DataCell(
+                                              SelectableText(item.b64.base64))
+                                        ]),
+                                        DataRow(cells: [
+                                          const DataCell(Text("urlsafe")),
+                                          DataCell(SelectableText(
+                                              item.b64.base64url))
+                                        ]),
+                                      ],
+                                    )),
+                                  ]))
+                              .toList(),
+                        ))),
               ],
             )));
   }
