@@ -8,7 +8,7 @@ class UUIDFormatsItem {
   final String b36;
   final String b48;
   final String b52;
-  final String b58;
+  final Base58Set b58;
   final String b62;
   final Base64Set b64;
 }
@@ -26,19 +26,32 @@ class Base32Set {
 
   @override
   String toString() {
-    return '$b32hex (hex)\n$crockford (crockford)\n$rfc4648 (rfc)\n$geohash (geohash)\n$zbase (zbase)';
+    return '$b32hex (hex)\n$crockford (crockford)\n$rfc4648 (rfc)\n$geohash (geohash)\n$zbase (zbase)\n$ncname (ncname)';
   }
 }
 
-class Base64Set {
-  const Base64Set(this.base64, this.base64url, this.ncname);
+class Base58Set {
+  const Base58Set(this.bitcoin, this.ncname);
 
-  final String base64;
-  final String base64url;
+  final String bitcoin;
   final String ncname;
 
   @override
   String toString() {
-    return '$base64\n$base64url (url)';
+    return '$bitcoin (bitcoin)\n$ncname (ncname)';
+  }
+}
+
+class Base64Set {
+  const Base64Set(this.base64, this.base64url, this.ncname, this.uuid);
+
+  final String base64;
+  final String base64url;
+  final String ncname;
+  final String uuid;
+
+  @override
+  String toString() {
+    return '$base64\n$base64url (url)\n$ncname (ncname)\n$uuid (uuid)';
   }
 }

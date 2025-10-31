@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:convert';
 
 import 'package:b/b.dart';
@@ -8,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:uuid/parsing.dart';
 import 'package:uuid/uuid.dart';
 
+import 'base64_uuid.dart';
 import 'uuid_formats_item.dart';
+import 'uuid_ncname.dart';
 
 /// Displays a list of SampleItems.
 class UUIDFormatList extends StatefulWidget {
@@ -33,14 +34,6 @@ class _UUIDFormatListView extends State<UUIDFormatList> {
     // Sanity check base UUID based on https://github.com/uuid6/new-uuid-encoding-techniques-ietf-draft/blob/master/TRADEOFFS.md#summary-of-concerns-and-tradeoffs
     const uuidString = "f81d4fae-7dec-11d0-a765-00a0c91e6bf6";
     items.add(uuidToItem(uuidString));
-  }
-
-  Uint8List _serializeBigInt(BigInt bi) {
-    Uint8List array = Uint8List((bi.bitLength / 8).ceil());
-    for (int i = array.length - 1; i >= 0; i--) {
-      array[i] = (bi >> (i * 8)).toUnsigned(8).toInt();
-    }
-    return array;
   }
 
   @override
@@ -208,12 +201,36 @@ class _UUIDFormatListView extends State<UUIDFormatList> {
                                           DataCell(
                                               SelectableText(item.b32.zbase))
                                         ]),
+                                        DataRow(cells: [
+                                          const DataCell(Text("ncname")),
+                                          DataCell(
+                                              SelectableText(item.b32.ncname))
+                                        ]),
                                       ],
                                     )),
                                     DataCell(SelectableText(item.b36)),
                                     DataCell(SelectableText(item.b48)),
                                     DataCell(SelectableText(item.b52)),
-                                    DataCell(SelectableText(item.b58)),
+                                    DataCell(DataTable(
+                                      headingRowHeight: 0,
+                                      dividerThickness: 0,
+                                      columns: const [
+                                        DataColumn(label: Text("variant")),
+                                        DataColumn(label: Text("hash"))
+                                      ],
+                                      rows: [
+                                        DataRow(cells: [
+                                          const DataCell(Text("bitcoin")),
+                                          DataCell(
+                                              SelectableText(item.b58.bitcoin))
+                                        ]),
+                                        DataRow(cells: [
+                                          const DataCell(Text("ncname")),
+                                          DataCell(
+                                              SelectableText(item.b58.ncname))
+                                        ]),
+                                      ],
+                                    )),
                                     DataCell(SelectableText(item.b62)),
                                     //DataCell(SelectableText(item.b64.toString())),
                                     DataCell(DataTable(
@@ -233,6 +250,16 @@ class _UUIDFormatListView extends State<UUIDFormatList> {
                                           const DataCell(Text("urlsafe")),
                                           DataCell(SelectableText(
                                               item.b64.base64url))
+                                        ]),
+                                        DataRow(cells: [
+                                          const DataCell(Text("ncname")),
+                                          DataCell(
+                                              SelectableText(item.b64.ncname))
+                                        ]),
+                                        DataRow(cells: [
+                                          const DataCell(Text("uuid")),
+                                          DataCell(
+                                              SelectableText(item.b64.uuid))
                                         ]),
                                       ],
                                     )),
@@ -284,6 +311,7 @@ class _UUIDFormatListView extends State<UUIDFormatList> {
         myb32.base32.encode(uuid, encoding: myb32e.Encoding.standardRFC4648);
     final b32g = myb32.base32.encode(uuid, encoding: myb32e.Encoding.geohash);
     final b32z = myb32.base32.encode(uuid, encoding: myb32e.Encoding.zbase32);
+    final b32ncname = UuidNCName.encodeBase32(uuid, lowercase: !lowercaseB32);
     final b36 = BaseConversion(from: base16.toLowerCase(), to: base36)(
         uuidStringNoDashes);
     final b48 = BaseConversion(from: base16.toLowerCase(), to: b48Alphabet)(
@@ -292,33 +320,36 @@ class _UUIDFormatListView extends State<UUIDFormatList> {
         uuidStringNoDashes);
     final b58 = BaseConversion(from: base16.toLowerCase(), to: base58)(
         uuidStringNoDashes);
+    final b58ncname = UuidNCName.encodeBase58(uuid);
     final b62 = BaseConversion(from: base16.toLowerCase(), to: base62)(
         uuidStringNoDashes);
     final b64 = const Base64Codec().encode(uuid);
     final b64url = const Base64Codec.urlSafe().encode(uuid);
+    final b64ncname = UuidNCName.encodeBase64(uuid);
+    final b64uuid = encodeBase64UUID(uuidString);
 
     if (lowercaseB32) {
       return UUIDFormatsItem(
           uuidString,
           Base32Set(b32h.toLowerCase(), b32c.toLowerCase(), b32r.toLowerCase(),
-              b32g.toLowerCase(), b32z.toLowerCase(), "".toLowerCase()),
+              b32g.toLowerCase(), b32z.toLowerCase(), b32ncname.toLowerCase()),
           b36.toLowerCase(),
           b48,
           b52,
-          b58,
+          Base58Set(b58, b58ncname.toLowerCase()),
           b62,
-          Base64Set(b64, b64url, ""));
+          Base64Set(b64, b64url, b64ncname.toLowerCase(), b64uuid));
     }
 
     return UUIDFormatsItem(
         uuidString,
-        Base32Set(b32h, b32c, b32r, b32g, b32z, ""),
+        Base32Set(b32h, b32c, b32r, b32g, b32z, b32ncname),
         b36,
         b48,
         b52,
-        b58,
+        Base58Set(b58, b58ncname),
         b62,
-        Base64Set(b64, b64url, ""));
+        Base64Set(b64, b64url, b64ncname, b64uuid));
   }
 
   clear() {
