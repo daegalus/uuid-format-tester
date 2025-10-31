@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:uuid/parsing.dart';
-import 'package:uuid_short_web/src/sample_feature/uuid_ncname.dart';
+import 'package:uuid_short_web/src/encoders/uuid_ncname.dart';
 
 void main() {
   group('UUID-NCName Encoding Tests', () {

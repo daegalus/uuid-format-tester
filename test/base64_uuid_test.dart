@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:uuid_short_web/src/sample_feature/base64_uuid.dart';
+import 'package:uuid_short_web/src/encoders/base64_uuid.dart';
 
 void main() {
   group('Base64UUID Encoding', () {

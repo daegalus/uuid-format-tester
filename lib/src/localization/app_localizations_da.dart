@@ -4,9 +4,9 @@ import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for English (`en`).
-class AppLocalizationsEn extends AppLocalizations {
-  AppLocalizationsEn([String locale = 'en']) : super(locale);
+/// The translations for Danish (`da`).
+class AppLocalizationsDa extends AppLocalizations {
+  AppLocalizationsDa([String locale = 'da']) : super(locale);
 
   @override
   String get appTitle => 'UUID Format Tester';
@@ -15,40 +15,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uuidVersion => 'UUID Version';
 
   @override
-  String get v1Timestamp => 'v1 (timestamp)';
+  String get v1Timestamp => 'v1 (tidsstempel)';
 
   @override
-  String get v4Random => 'v4 (random)';
+  String get v4Random => 'v4 (tilfældig)';
 
   @override
   String get v5Sha1 => 'v5 (SHA-1)';
 
   @override
-  String get v6TimestampSorted => 'v6 (timestamp sorted)';
+  String get v6TimestampSorted => 'v6 (tidsstempel sorteret)';
 
   @override
-  String get v7UnixTime => 'v7 (Unix time)';
+  String get v7UnixTime => 'v7 (Unix tid)';
 
   @override
-  String get v8Custom => 'v8 (custom)';
+  String get v8Custom => 'v8 (brugerdefineret)';
 
   @override
-  String get lowercaseBase32 => 'Lowercase Base32:';
+  String get lowercaseBase32 => 'Små bogstaver Base32:';
 
   @override
-  String get addUuid => 'Add UUID';
+  String get addUuid => 'Tilføj UUID';
 
   @override
-  String get add10 => 'Add 10';
+  String get add10 => 'Tilføj 10';
 
   @override
-  String get clearAll => 'Clear All';
+  String get clearAll => 'Ryd alle';
 
   @override
-  String get scrollToTop => 'Scroll to Top';
+  String get scrollToTop => 'Rul til toppen';
 
   @override
-  String get noUuidsYet => 'No UUIDs yet. Click \"Add UUID\" to generate one.';
+  String get noUuidsYet =>
+      'Ingen UUID\'er endnu. Klik på \"Tilføj UUID\" for at generere en.';
 
   @override
   String get uuid => 'UUID';

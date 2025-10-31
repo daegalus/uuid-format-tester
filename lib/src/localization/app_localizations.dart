@@ -5,7 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_bg.dart';
+import 'app_localizations_da.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_ru.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,13 +97,146 @@ abstract class AppLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('bg'),
+    Locale('da'),
+    Locale('en'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('ru')
+  ];
 
   /// The title of the application
   ///
   /// In en, this message translates to:
-  /// **'uuid_short_web'**
+  /// **'UUID Format Tester'**
   String get appTitle;
+
+  /// Label for UUID version selector
+  ///
+  /// In en, this message translates to:
+  /// **'UUID Version'**
+  String get uuidVersion;
+
+  /// UUID v1 timestamp-based
+  ///
+  /// In en, this message translates to:
+  /// **'v1 (timestamp)'**
+  String get v1Timestamp;
+
+  /// UUID v4 random
+  ///
+  /// In en, this message translates to:
+  /// **'v4 (random)'**
+  String get v4Random;
+
+  /// UUID v5 SHA-1 hash
+  ///
+  /// In en, this message translates to:
+  /// **'v5 (SHA-1)'**
+  String get v5Sha1;
+
+  /// UUID v6 timestamp sorted
+  ///
+  /// In en, this message translates to:
+  /// **'v6 (timestamp sorted)'**
+  String get v6TimestampSorted;
+
+  /// UUID v7 Unix timestamp
+  ///
+  /// In en, this message translates to:
+  /// **'v7 (Unix time)'**
+  String get v7UnixTime;
+
+  /// UUID v8 custom
+  ///
+  /// In en, this message translates to:
+  /// **'v8 (custom)'**
+  String get v8Custom;
+
+  /// Label for lowercase Base32 toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Lowercase Base32:'**
+  String get lowercaseBase32;
+
+  /// Button to add a single UUID
+  ///
+  /// In en, this message translates to:
+  /// **'Add UUID'**
+  String get addUuid;
+
+  /// Button to add 10 UUIDs
+  ///
+  /// In en, this message translates to:
+  /// **'Add 10'**
+  String get add10;
+
+  /// Button to clear all UUIDs
+  ///
+  /// In en, this message translates to:
+  /// **'Clear All'**
+  String get clearAll;
+
+  /// Button to scroll to top of list
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll to Top'**
+  String get scrollToTop;
+
+  /// Empty state message
+  ///
+  /// In en, this message translates to:
+  /// **'No UUIDs yet. Click \"Add UUID\" to generate one.'**
+  String get noUuidsYet;
+
+  /// UUID column header
+  ///
+  /// In en, this message translates to:
+  /// **'UUID'**
+  String get uuid;
+
+  /// Base32 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base32'**
+  String get base32;
+
+  /// Base36 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base36'**
+  String get base36;
+
+  /// Base48 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base48'**
+  String get base48;
+
+  /// Base52 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base52'**
+  String get base52;
+
+  /// Base58 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base58'**
+  String get base58;
+
+  /// Base62 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base62'**
+  String get base62;
+
+  /// Base64 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base64'**
+  String get base64;
 }
 
 class _AppLocalizationsDelegate
@@ -111,8 +249,14 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+        'bg',
+        'da',
+        'en',
+        'ja',
+        'ko',
+        'ru'
+      ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -121,8 +265,18 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'bg':
+      return AppLocalizationsBg();
+    case 'da':
+      return AppLocalizationsDa();
     case 'en':
       return AppLocalizationsEn();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'ko':
+      return AppLocalizationsKo();
+    case 'ru':
+      return AppLocalizationsRu();
   }
 
   throw FlutterError(

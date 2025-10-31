@@ -1,6 +1,90 @@
 {
-  "appTitle": "uuid_short_web",
+  "appTitle": "UUID Format Tester",
   "@appTitle": {
     "description": "The title of the application"
+  },
+  "uuidVersion": "UUID Version",
+  "@uuidVersion": {
+    "description": "Label for UUID version selector"
+  },
+  "v1Timestamp": "v1 (timestamp)",
+  "@v1Timestamp": {
+    "description": "UUID v1 timestamp-based"
+  },
+  "v4Random": "v4 (random)",
+  "@v4Random": {
+    "description": "UUID v4 random"
+  },
+  "v5Sha1": "v5 (SHA-1)",
+  "@v5Sha1": {
+    "description": "UUID v5 SHA-1 hash"
+  },
+  "v6TimestampSorted": "v6 (timestamp sorted)",
+  "@v6TimestampSorted": {
+    "description": "UUID v6 timestamp sorted"
+  },
+  "v7UnixTime": "v7 (Unix time)",
+  "@v7UnixTime": {
+    "description": "UUID v7 Unix timestamp"
+  },
+  "v8Custom": "v8 (custom)",
+  "@v8Custom": {
+    "description": "UUID v8 custom"
+  },
+  "lowercaseBase32": "Lowercase Base32:",
+  "@lowercaseBase32": {
+    "description": "Label for lowercase Base32 toggle"
+  },
+  "addUuid": "Add UUID",
+  "@addUuid": {
+    "description": "Button to add a single UUID"
+  },
+  "add10": "Add 10",
+  "@add10": {
+    "description": "Button to add 10 UUIDs"
+  },
+  "clearAll": "Clear All",
+  "@clearAll": {
+    "description": "Button to clear all UUIDs"
+  },
+  "scrollToTop": "Scroll to Top",
+  "@scrollToTop": {
+    "description": "Button to scroll to top of list"
+  },
+  "noUuidsYet": "No UUIDs yet. Click \"Add UUID\" to generate one.",
+  "@noUuidsYet": {
+    "description": "Empty state message"
+  },
+  "uuid": "UUID",
+  "@uuid": {
+    "description": "UUID column header"
+  },
+  "base32": "Base32",
+  "@base32": {
+    "description": "Base32 column header"
+  },
+  "base36": "Base36",
+  "@base36": {
+    "description": "Base36 column header"
+  },
+  "base48": "Base48",
+  "@base48": {
+    "description": "Base48 column header"
+  },
+  "base52": "Base52",
+  "@base52": {
+    "description": "Base52 column header"
+  },
+  "base58": "Base58",
+  "@base58": {
+    "description": "Base58 column header"
+  },
+  "base62": "Base62",
+  "@base62": {
+    "description": "Base62 column header"
+  },
+  "base64": "Base64",
+  "@base64": {
+    "description": "Base64 column header"
   }
 }
