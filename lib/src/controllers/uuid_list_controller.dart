@@ -84,7 +84,8 @@ class UuidListController extends ChangeNotifier {
     return switch (_uuidVersion) {
       'v1' => _uuidGenerator.v1(),
       'v4' => _uuidGenerator.v4(),
-      'v5' => _uuidGenerator.v5(Namespace.url.value, 'https://example.com'),
+      'v5' => _uuidGenerator.v5(
+          Namespace.url.value, 'https://uuidformattester.yuli.dev'),
       'v6' => _uuidGenerator.v6(),
       'v7' => _uuidGenerator.v7(),
       'v8' => _uuidGenerator.v8(),
