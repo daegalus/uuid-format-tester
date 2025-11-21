@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
-import '../lib/src/encoders/base100_uuid.dart';
+import 'package:uuid_short_web/src/encoders/base100_uuid.dart';
 
 void main() {
   group('Base100 Encoding Tests', () {
