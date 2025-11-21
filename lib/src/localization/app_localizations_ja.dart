@@ -87,5 +87,5 @@ class AppLocalizationsJa extends AppLocalizations {
   String get base92 => 'Base92';
 
   @override
-  String get base100 => 'Base100';
+  String get base100 => 'Base💯';
 }

@@ -262,10 +262,10 @@ abstract class AppLocalizations {
   /// **'Base92'**
   String get base92;
 
-  /// Base100 column header
+  /// Base💯 column header
   ///
   /// In en, this message translates to:
-  /// **'Base100'**
+  /// **'Base💯'**
   String get base100;
 }
 

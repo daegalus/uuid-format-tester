@@ -103,8 +103,8 @@
   "@base92": {
     "description": "Base92 column header"
   },
-  "base100": "Base100",
+  "base100": "Base💯",
   "@base100": {
-    "description": "Base100 column header"
+    "description": "Base💯 column header"
   }
 }
