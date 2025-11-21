@@ -14,11 +14,13 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  cupertino_icons: ^1.0.8
   uuid: ^4.5.2
   base32: ^2.2.0
   base62x: ^0.2.3
   b: ^0.2.0
   shared_preferences: ^2.3.3
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:

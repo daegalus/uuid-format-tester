@@ -21,11 +21,18 @@ class SettingsController with ChangeNotifier {
   // also persisting the changes with the SettingsService.
   Locale? _locale;
 
+  // Make removePadding a private variable so it is not updated directly without
+  // also persisting the changes with the SettingsService.
+  late bool _removePadding;
+
   // Allow Widgets to read the user's preferred ThemeMode.
   ThemeMode get themeMode => _themeMode;
 
   // Allow Widgets to read the user's preferred Locale.
   Locale? get locale => _locale;
+
+  // Allow Widgets to read the user's preference for removing padding.
+  bool get removePadding => _removePadding;
 
   /// Load the user's settings from the SettingsService. It may load from a
   /// local database or the internet. The controller only knows it can load the
@@ -33,6 +40,7 @@ class SettingsController with ChangeNotifier {
   Future<void> loadSettings() async {
     _themeMode = await _settingsService.themeMode();
     _locale = await _settingsService.locale();
+    _removePadding = await _settingsService.removePadding();
 
     // Important! Inform listeners a change has occurred.
     notifyListeners();
@@ -70,5 +78,21 @@ class SettingsController with ChangeNotifier {
     // Persist the changes to a local database or the internet using the
     // SettingService.
     await _settingsService.updateLocale(newLocale);
+  }
+
+  /// Update and persist the removePadding preference.
+  Future<void> updateRemovePadding(bool value) async {
+    // Do not perform any work if new and old value are identical
+    if (value == _removePadding) return;
+
+    // Otherwise, store the new value in memory
+    _removePadding = value;
+
+    // Important! Inform listeners a change has occurred.
+    notifyListeners();
+
+    // Persist the changes to a local database or the internet using the
+    // SettingService.
+    await _settingsService.updateRemovePadding(value);
   }
 }

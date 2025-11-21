@@ -20,5 +20,6 @@
   "base52": "Base52",
   "base58": "Base58",
   "base62": "Base62",
-  "base64": "Base64"
+  "base64": "Base64",
+  "base85": "Base85"
 }

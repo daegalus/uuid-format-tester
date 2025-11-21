@@ -120,16 +120,38 @@ class _UuidControlsPanelState extends State<UuidControlsPanel> {
                 ],
               ),
               // Lowercase Base32 Toggle
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(localizations.lowercaseBase32),
-                  const SizedBox(width: 8),
-                  Switch(
-                    value: widget.controller.lowercaseBase32,
-                    onChanged: widget.controller.setLowercaseBase32,
-                  ),
-                ],
+              ListenableBuilder(
+                listenable: widget.controller,
+                builder: (context, child) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(localizations.lowercaseBase32),
+                      const SizedBox(width: 8),
+                      Switch(
+                        value: widget.controller.lowercaseBase32,
+                        onChanged: widget.controller.setLowercaseBase32,
+                      ),
+                    ],
+                  );
+                },
+              ),
+              // Remove Padding Toggle
+              ListenableBuilder(
+                listenable: widget.controller,
+                builder: (context, child) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('Remove Padding'),
+                      const SizedBox(width: 8),
+                      Switch(
+                        value: widget.controller.removePadding,
+                        onChanged: widget.controller.setRemovePadding,
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),

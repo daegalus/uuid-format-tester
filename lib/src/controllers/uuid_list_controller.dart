@@ -16,6 +16,7 @@ class UuidListController extends ChangeNotifier {
   final Uuid _uuidGenerator = const Uuid();
 
   bool _lowercaseBase32 = false;
+  bool _removePadding = false;
   String _uuidVersion = 'v7';
 
   /// The current list of encoded UUIDs.
@@ -23,6 +24,9 @@ class UuidListController extends ChangeNotifier {
 
   /// Whether to use lowercase for Base32 encodings.
   bool get lowercaseBase32 => _lowercaseBase32;
+
+  /// Whether to remove padding from encodings.
+  bool get removePadding => _removePadding;
 
   /// The currently selected UUID version for generation.
   String get uuidVersion => _uuidVersion;
@@ -33,6 +37,7 @@ class UuidListController extends ChangeNotifier {
     final result = _encodingService.encodeUuid(
       uuid,
       lowercaseBase32: _lowercaseBase32,
+      removePadding: _removePadding,
     );
     _items.add(result);
     notifyListeners();
@@ -45,6 +50,7 @@ class UuidListController extends ChangeNotifier {
       final result = _encodingService.encodeUuid(
         uuid,
         lowercaseBase32: _lowercaseBase32,
+        removePadding: _removePadding,
       );
       _items.add(result);
     }
@@ -56,6 +62,7 @@ class UuidListController extends ChangeNotifier {
     final result = _encodingService.encodeUuid(
       uuidString,
       lowercaseBase32: _lowercaseBase32,
+      removePadding: _removePadding,
     );
     _items.add(result);
     notifyListeners();
@@ -70,6 +77,12 @@ class UuidListController extends ChangeNotifier {
   /// Sets whether to use lowercase for Base32 encodings.
   void setLowercaseBase32(bool value) {
     _lowercaseBase32 = value;
+    notifyListeners();
+  }
+
+  /// Sets whether to remove padding from encodings.
+  void setRemovePadding(bool value) {
+    _removePadding = value;
     notifyListeners();
   }
 

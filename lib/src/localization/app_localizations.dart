@@ -237,6 +237,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Base64'**
   String get base64;
+
+  /// Base85 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base85'**
+  String get base85;
 }
 
 class _AppLocalizationsDelegate

@@ -86,5 +86,9 @@
   "base64": "Base64",
   "@base64": {
     "description": "Base64 column header"
+  },
+  "base85": "Base85",
+  "@base85": {
+    "description": "Base85 column header"
   }
 }

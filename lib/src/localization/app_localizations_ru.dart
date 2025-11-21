@@ -74,4 +74,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get base64 => 'Base64';
+
+  @override
+  String get base85 => 'Base85';
 }

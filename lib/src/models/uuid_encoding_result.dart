@@ -12,6 +12,7 @@ class UuidEncodingResult {
     required this.base58,
     required this.base62,
     required this.base64,
+    required this.base85,
   });
 
   final String uuid;
@@ -22,6 +23,7 @@ class UuidEncodingResult {
   final Base58Encoding base58;
   final String base62;
   final Base64Encoding base64;
+  final Base85Encoding base85;
 }
 
 /// Base32 encoding variants.
@@ -81,5 +83,23 @@ class Base64Encoding {
   @override
   String toString() {
     return '$standard\n$urlSafe (url)\n$ncname (ncname)\n$uuid (uuid)';
+  }
+}
+
+/// Base85 encoding variants.
+class Base85Encoding {
+  const Base85Encoding({
+    required this.ascii85,
+    required this.z85,
+    required this.custom,
+  });
+
+  final String ascii85;
+  final String z85;
+  final String custom;
+
+  @override
+  String toString() {
+    return '$ascii85 (ascii85)\n$z85 (z85)\n$custom (custom)';
   }
 }

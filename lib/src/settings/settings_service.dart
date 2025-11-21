@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SettingsService {
   static const String _localeKey = 'locale';
   static const String _themeModeKey = 'theme_mode';
+  static const String _removePaddingKey = 'remove_padding';
 
   /// Loads the User's preferred ThemeMode from local storage.
   Future<ThemeMode> themeMode() async {
@@ -78,5 +79,17 @@ class SettingsService {
           : locale.languageCode;
       await prefs.setString(_localeKey, localeString);
     }
+  }
+
+  /// Loads the User's preference for removing padding from encodings.
+  Future<bool> removePadding() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_removePaddingKey) ?? false;
+  }
+
+  /// Persists the user's preference for removing padding to local storage.
+  Future<void> updateRemovePadding(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_removePaddingKey, value);
   }
 }
