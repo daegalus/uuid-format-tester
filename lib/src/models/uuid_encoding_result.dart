@@ -7,23 +7,31 @@ class UuidEncodingResult {
     required this.uuid,
     required this.base32,
     required this.base36,
+    required this.base45,
     required this.base48,
     required this.base52,
     required this.base58,
     required this.base62,
     required this.base64,
     required this.base85,
+    required this.base91,
+    required this.base92,
+    required this.base100,
   });
 
   final String uuid;
   final Base32Encoding base32;
   final String base36;
+  final String base45;
   final String base48;
   final String base52;
   final Base58Encoding base58;
   final String base62;
   final Base64Encoding base64;
   final Base85Encoding base85;
+  final String base91;
+  final String base92;
+  final String base100;
 }
 
 /// Base32 encoding variants.
@@ -89,17 +97,21 @@ class Base64Encoding {
 /// Base85 encoding variants.
 class Base85Encoding {
   const Base85Encoding({
+    required this.btoa,
     required this.ascii85,
+    required this.zmodem,
     required this.z85,
     required this.custom,
   });
 
+  final String btoa;
   final String ascii85;
+  final String zmodem;
   final String z85;
   final String custom;
 
   @override
   String toString() {
-    return '$ascii85 (ascii85)\n$z85 (z85)\n$custom (custom)';
+    return '$btoa (btoa)\n$ascii85 (ascii85)\n$zmodem (zmodem)\n$z85 (z85)\n$custom (custom)';
   }
 }

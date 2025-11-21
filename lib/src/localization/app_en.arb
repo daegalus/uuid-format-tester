@@ -90,5 +90,21 @@
   "base85": "Base85",
   "@base85": {
     "description": "Base85 column header"
+  },
+  "base45": "Base45",
+  "@base45": {
+    "description": "Base45 column header"
+  },
+  "base91": "Base91",
+  "@base91": {
+    "description": "Base91 column header"
+  },
+  "base92": "Base92",
+  "@base92": {
+    "description": "Base92 column header"
+  },
+  "base100": "Base100",
+  "@base100": {
+    "description": "Base100 column header"
   }
 }

@@ -243,6 +243,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Base85'**
   String get base85;
+
+  /// Base45 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base45'**
+  String get base45;
+
+  /// Base91 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base91'**
+  String get base91;
+
+  /// Base92 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base92'**
+  String get base92;
+
+  /// Base100 column header
+  ///
+  /// In en, this message translates to:
+  /// **'Base100'**
+  String get base100;
 }
 
 class _AppLocalizationsDelegate

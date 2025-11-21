@@ -77,4 +77,16 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get base85 => 'Base85';
+
+  @override
+  String get base45 => 'Base45';
+
+  @override
+  String get base91 => 'Base91';
+
+  @override
+  String get base92 => 'Base92';
+
+  @override
+  String get base100 => 'Base100';
 }

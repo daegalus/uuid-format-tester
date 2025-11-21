@@ -34,12 +34,16 @@ class UuidEncodingService {
       uuid: uuidString,
       base32: _encodeBase32(uuidBytes, lowercaseBase32, removePadding),
       base36: _encodeBase(uuidNoDashes, base36),
+      base45: _encodeBase45(uuidBytes),
       base48: _encodeBase(uuidNoDashes, base48Alphabet),
       base52: _encodeBase(uuidNoDashes, base52Alphabet),
       base58: _encodeBase58(uuidBytes, lowercaseBase32),
       base62: _encodeBase(uuidNoDashes, base62),
       base64: _encodeBase64(uuidBytes, lowercaseBase32, removePadding),
       base85: _encodeBase85(uuidBytes),
+      base91: _encodeBase91(uuidBytes),
+      base92: _encodeBase92(uuidBytes),
+      base100: _encodeBase100(uuidBytes),
     );
   }
 
@@ -136,14 +140,38 @@ class UuidEncodingService {
 
   /// Encodes UUID bytes to Base85 variants.
   Base85Encoding _encodeBase85(Uint8List uuidBytes) {
+    final btoa = encodeBtoa(uuidBytes);
     final ascii85 = encodeAscii85(uuidBytes);
+    final zmodem = encodeZmodem(uuidBytes);
     final z85 = encodeZ85(uuidBytes);
     final custom = encodeCustomBase85(uuidBytes);
 
     return Base85Encoding(
+      btoa: btoa,
       ascii85: ascii85,
+      zmodem: zmodem,
       z85: z85,
       custom: custom,
     );
+  }
+
+  /// Encodes UUID bytes to Base45.
+  String _encodeBase45(Uint8List uuidBytes) {
+    return encodeBase45(uuidBytes);
+  }
+
+  /// Encodes UUID bytes to Base91.
+  String _encodeBase91(Uint8List uuidBytes) {
+    return encodeBase91(uuidBytes);
+  }
+
+  /// Encodes UUID bytes to Base92.
+  String _encodeBase92(Uint8List uuidBytes) {
+    return encodeBase92(uuidBytes);
+  }
+
+  /// Encodes UUID bytes to Base100.
+  String _encodeBase100(Uint8List uuidBytes) {
+    return encodeBase100(uuidBytes);
   }
 }

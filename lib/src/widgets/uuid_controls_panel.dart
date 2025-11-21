@@ -62,6 +62,10 @@ class _UuidControlsPanelState extends State<UuidControlsPanel> {
     });
   }
 
+  void _insertTestUuid(String uuid) {
+    widget.controller.addSpecificUuid(uuid);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
@@ -81,10 +85,52 @@ class _UuidControlsPanelState extends State<UuidControlsPanel> {
                     'Enter UUID (e.g., 123e4567-e89b-12d3-a456-426614174000)',
                 errorText: _errorText,
                 border: const OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.add_circle),
-                  onPressed: _addCustomUuid,
-                  tooltip: 'Add Custom UUID',
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    PopupMenuButton<String>(
+                      icon: const Icon(Icons.science),
+                      tooltip: 'Insert Test UUID',
+                      onSelected: _insertTestUuid,
+                      itemBuilder: (BuildContext context) => [
+                        const PopupMenuItem<String>(
+                          value: '00000000-0000-0000-0000-000000000000',
+                          child: Row(
+                            children: [
+                              Icon(Icons.block, size: 20),
+                              SizedBox(width: 8),
+                              Text('Null UUID (all 0s)'),
+                            ],
+                          ),
+                        ),
+                        const PopupMenuItem<String>(
+                          value: 'ffffffff-ffff-ffff-ffff-ffffffffffff',
+                          child: Row(
+                            children: [
+                              Icon(Icons.check_box, size: 20),
+                              SizedBox(width: 8),
+                              Text('Max UUID (all Fs)'),
+                            ],
+                          ),
+                        ),
+                        const PopupMenuItem<String>(
+                          value: '20202020-8020-8020-8920-202020202020',
+                          child: Row(
+                            children: [
+                              Icon(Icons.compress, size: 20),
+                              SizedBox(width: 8),
+                              Text('Space Pattern (0x20)'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add_circle),
+                      onPressed: _addCustomUuid,
+                      tooltip: 'Add Custom UUID',
+                    ),
+                  ],
                 ),
               ),
               onSubmitted: (_) => _addCustomUuid(),

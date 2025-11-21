@@ -1,9 +1,11 @@
 /// Implementation of Base85 encoding variants for UUIDs.
 ///
-/// Supports three Base85 variants:
-/// - Ascii85 (Adobe): Used in PostScript and PDF, with special compression
+/// Supports five Base85 variants:
+/// - btoa (Core): Original btoa with 'z' for zeros and 'y' for spaces (0x20202020)
+/// - Ascii85 (Adobe): Used in PostScript and PDF, with 'z' compression only
+/// - ZMODEM: ZMODEM Pack-7 encoding variant
 /// - Z85: ZeroMQ's Base85, designed for embedding in source code
-/// - Custom: Simple Base85 without Y/Z compression logic
+/// - Custom: Simple Base85 without any compression logic
 ///
 /// References:
 /// - Ascii85: https://en.wikipedia.org/wiki/Ascii85
@@ -22,6 +24,109 @@ const String _z85Alphabet =
 
 /// Custom alphabet: same as Ascii85 but without Y/Z compression
 const String _customAlphabet = _ascii85Alphabet;
+
+/// Encodes UUID bytes to btoa (Core/Original) format.
+///
+/// btoa is the original Base85 encoding with two special compressions:
+/// - 4 zero bytes (0x00000000) are encoded as 'z'
+/// - 4 space bytes (0x20202020) are encoded as 'y'
+/// UUIDs are 16 bytes, which encode to 20 characters (or less with compression).
+///
+/// Example:
+/// ```dart
+/// var encoded = encodeBtoa(uuidBytes);
+/// ```
+String encodeBtoa(Uint8List bytes) {
+  if (bytes.length != 16) {
+    throw ArgumentError('UUID must be exactly 16 bytes');
+  }
+
+  final result = StringBuffer();
+
+  // Process 4 bytes at a time
+  for (var i = 0; i < bytes.length; i += 4) {
+    // Convert 4 bytes to 32-bit unsigned integer (big-endian)
+    final value = (bytes[i] << 24) |
+        (bytes[i + 1] << 16) |
+        (bytes[i + 2] << 8) |
+        bytes[i + 3];
+
+    // Special case: all zeros compress to 'z'
+    if (value == 0) {
+      result.write('z');
+      continue;
+    }
+
+    // Special case: all spaces (0x20202020) compress to 'y'
+    if (value == 0x20202020) {
+      result.write('y');
+      continue;
+    }
+
+    // Encode as 5 base-85 digits (most significant first)
+    final chars = <int>[];
+    var remainder = value;
+    for (var j = 0; j < 5; j++) {
+      chars.insert(0, remainder % 85);
+      remainder ~/= 85;
+    }
+
+    // Convert to ASCII characters
+    for (var charIndex in chars) {
+      result.write(_ascii85Alphabet[charIndex]);
+    }
+  }
+
+  return result.toString();
+}
+
+/// Encodes UUID bytes to ZMODEM Pack-7 format.
+///
+/// ZMODEM Pack-7 encodes 4 bytes into 5 characters similar to Ascii85.
+/// Like Adobe's Ascii85, it uses the '!' to 'u' alphabet and 'z' compression.
+/// UUIDs are 16 bytes, which encode to 20 characters (or less with compression).
+///
+/// Example:
+/// ```dart
+/// var encoded = encodeZmodem(uuidBytes);
+/// ```
+String encodeZmodem(Uint8List bytes) {
+  if (bytes.length != 16) {
+    throw ArgumentError('UUID must be exactly 16 bytes');
+  }
+
+  final result = StringBuffer();
+
+  // Process 4 bytes at a time
+  for (var i = 0; i < bytes.length; i += 4) {
+    // Convert 4 bytes to 32-bit unsigned integer (big-endian)
+    final value = (bytes[i] << 24) |
+        (bytes[i + 1] << 16) |
+        (bytes[i + 2] << 8) |
+        bytes[i + 3];
+
+    // Special case: all zeros compress to 'z' (like Ascii85)
+    if (value == 0) {
+      result.write('z');
+      continue;
+    }
+
+    // Encode as 5 base-85 digits (most significant first)
+    final chars = <int>[];
+    var remainder = value;
+    for (var j = 0; j < 5; j++) {
+      chars.insert(0, remainder % 85);
+      remainder ~/= 85;
+    }
+
+    // Convert to ASCII characters
+    for (var charIndex in chars) {
+      result.write(_ascii85Alphabet[charIndex]);
+    }
+  }
+
+  return result.toString();
+}
 
 /// Encodes UUID bytes to Ascii85 (Adobe) format.
 ///

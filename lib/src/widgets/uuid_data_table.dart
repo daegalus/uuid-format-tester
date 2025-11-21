@@ -166,6 +166,14 @@ class _UuidDataTableState extends State<UuidDataTable> {
               output: item.base36,
             ));
 
+            // Add Base45
+            rows.add(_EncodingRow(
+              uuid: item.uuid,
+              encoding: localizations.base45,
+              variant: '-',
+              output: item.base45,
+            ));
+
             // Add Base48
             rows.add(_EncodingRow(
               uuid: item.uuid,
@@ -219,6 +227,30 @@ class _UuidDataTableState extends State<UuidDataTable> {
                 output: variant.value,
               ));
             }
+
+            // Add Base91
+            rows.add(_EncodingRow(
+              uuid: item.uuid,
+              encoding: localizations.base91,
+              variant: '-',
+              output: item.base91,
+            ));
+
+            // Add Base92
+            rows.add(_EncodingRow(
+              uuid: item.uuid,
+              encoding: localizations.base92,
+              variant: '-',
+              output: item.base92,
+            ));
+
+            // Add Base100
+            rows.add(_EncodingRow(
+              uuid: item.uuid,
+              encoding: localizations.base100,
+              variant: '-',
+              output: item.base100,
+            ));
 
             // Return a container for this UUID's encodings
             return Container(
@@ -318,6 +350,9 @@ class _UuidDataTableState extends State<UuidDataTable> {
                         localizations.base36, item.base36, null),
                     const Divider(),
                     _buildEncodingSection(
+                        localizations.base45, item.base45, null),
+                    const Divider(),
+                    _buildEncodingSection(
                         localizations.base48, item.base48, null),
                     const Divider(),
                     _buildEncodingSection(
@@ -334,6 +369,15 @@ class _UuidDataTableState extends State<UuidDataTable> {
                     const Divider(),
                     _buildEncodingSection(localizations.base85, null,
                         base85Variants(item.base85)),
+                    const Divider(),
+                    _buildEncodingSection(
+                        localizations.base91, item.base91, null),
+                    const Divider(),
+                    _buildEncodingSection(
+                        localizations.base92, item.base92, null),
+                    const Divider(),
+                    _buildEncodingSection(
+                        localizations.base100, item.base100, null),
                   ],
                 ),
               ),
@@ -431,6 +475,9 @@ class _UuidDataTableState extends State<UuidDataTable> {
                     label: Text(localizations.base36,
                         style: const TextStyle(fontWeight: FontWeight.bold))),
                 DataColumn(
+                    label: Text(localizations.base45,
+                        style: const TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(
                     label: Text(localizations.base48,
                         style: const TextStyle(fontWeight: FontWeight.bold))),
                 DataColumn(
@@ -447,6 +494,15 @@ class _UuidDataTableState extends State<UuidDataTable> {
                         style: const TextStyle(fontWeight: FontWeight.bold))),
                 DataColumn(
                     label: Text(localizations.base85,
+                        style: const TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text(localizations.base91,
+                        style: const TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text(localizations.base92,
+                        style: const TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(
+                    label: Text(localizations.base100,
                         style: const TextStyle(fontWeight: FontWeight.bold))),
               ],
               rows: widget.items.map((item) => _buildDataRow(item)).toList(),
@@ -468,12 +524,16 @@ class _UuidDataTableState extends State<UuidDataTable> {
         DataCell(SelectableText(item.uuid, style: monoStyle, maxLines: 1)),
         DataCell(_buildVariantTable(base32Variants(item.base32))),
         DataCell(SelectableText(item.base36, style: monoStyle, maxLines: 1)),
+        DataCell(SelectableText(item.base45, style: monoStyle, maxLines: 1)),
         DataCell(SelectableText(item.base48, style: monoStyle, maxLines: 1)),
         DataCell(SelectableText(item.base52, style: monoStyle, maxLines: 1)),
         DataCell(_buildVariantTable(base58Variants(item.base58))),
         DataCell(SelectableText(item.base62, style: monoStyle, maxLines: 1)),
         DataCell(_buildVariantTable(base64Variants(item.base64))),
         DataCell(_buildVariantTable(base85Variants(item.base85))),
+        DataCell(SelectableText(item.base91, style: monoStyle, maxLines: 1)),
+        DataCell(SelectableText(item.base92, style: monoStyle, maxLines: 1)),
+        DataCell(SelectableText(item.base100, style: monoStyle, maxLines: 1)),
       ],
     );
   }
@@ -557,7 +617,9 @@ class _UuidDataTableState extends State<UuidDataTable> {
   /// Extracts Base85 encoding variants.
   List<MapEntry<String, String>> base85Variants(Base85Encoding base85) {
     return [
+      MapEntry('btoa', base85.btoa),
       MapEntry('ascii85', base85.ascii85),
+      MapEntry('zmodem', base85.zmodem),
       MapEntry('z85', base85.z85),
       MapEntry('custom', base85.custom),
     ];
