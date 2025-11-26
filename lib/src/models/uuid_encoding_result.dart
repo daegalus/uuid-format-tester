@@ -26,7 +26,7 @@ class UuidEncodingResult {
   final String base48;
   final String base52;
   final Base58Encoding base58;
-  final String base62;
+  final Base62Encoding base62;
   final Base64Encoding base64;
   final Base85Encoding base85;
   final String base91;
@@ -71,6 +71,22 @@ class Base58Encoding {
   @override
   String toString() {
     return '$bitcoin (bitcoin)\n$ncname (ncname)';
+  }
+}
+
+/// Base62 encoding variants.
+class Base62Encoding {
+  const Base62Encoding({
+    required this.sort,
+    required this.ieee,
+  });
+
+  final String sort;
+  final String ieee;
+
+  @override
+  String toString() {
+    return '$sort (sort)\n$ieee (ieee)';
   }
 }
 

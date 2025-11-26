@@ -38,7 +38,7 @@ class UuidEncodingService {
       base48: _encodeBase(uuidNoDashes, base48Alphabet),
       base52: _encodeBase(uuidNoDashes, base52Alphabet),
       base58: _encodeBase58(uuidBytes, lowercaseBase32),
-      base62: _encodeBase(uuidNoDashes, base62),
+      base62: _encodeBase62(uuidNoDashes),
       base64: _encodeBase64(uuidBytes, lowercaseBase32, removePadding),
       base85: _encodeBase85(uuidBytes),
       base91: _encodeBase91(uuidBytes),
@@ -101,6 +101,19 @@ class UuidEncodingService {
     return Base58Encoding(
       bitcoin: bitcoin,
       ncname: lowercase ? ncname.toLowerCase() : ncname,
+    );
+  }
+
+  /// Encodes UUID hex string to Base62 variants.
+  Base62Encoding _encodeBase62(String uuidNoDashes) {
+    final sort = BaseConversion(
+        from: base16.toLowerCase(), to: base62SortAlphabet)(uuidNoDashes);
+    final ieee = BaseConversion(
+        from: base16.toLowerCase(), to: base62IeeeAlphabet)(uuidNoDashes);
+
+    return Base62Encoding(
+      sort: sort,
+      ieee: ieee,
     );
   }
 

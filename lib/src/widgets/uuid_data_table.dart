@@ -200,13 +200,15 @@ class _UuidDataTableState extends State<UuidDataTable> {
               ));
             }
 
-            // Add Base62
-            rows.add(_EncodingRow(
-              uuid: item.uuid,
-              encoding: localizations.base62,
-              variant: '-',
-              output: item.base62,
-            ));
+            // Add Base62 variants
+            for (final variant in base62Variants(item.base62)) {
+              rows.add(_EncodingRow(
+                uuid: item.uuid,
+                encoding: localizations.base62,
+                variant: variant.key,
+                output: variant.value,
+              ));
+            }
 
             // Add Base64 variants
             for (final variant in base64Variants(item.base64)) {
@@ -361,8 +363,8 @@ class _UuidDataTableState extends State<UuidDataTable> {
                     _buildEncodingSection(localizations.base58, null,
                         base58Variants(item.base58)),
                     const Divider(),
-                    _buildEncodingSection(
-                        localizations.base62, item.base62, null),
+                    _buildEncodingSection(localizations.base62, null,
+                        base62Variants(item.base62)),
                     const Divider(),
                     _buildEncodingSection(localizations.base64, null,
                         base64Variants(item.base64)),
@@ -528,7 +530,7 @@ class _UuidDataTableState extends State<UuidDataTable> {
         DataCell(SelectableText(item.base48, style: monoStyle, maxLines: 1)),
         DataCell(SelectableText(item.base52, style: monoStyle, maxLines: 1)),
         DataCell(_buildVariantTable(base58Variants(item.base58))),
-        DataCell(SelectableText(item.base62, style: monoStyle, maxLines: 1)),
+        DataCell(_buildVariantTable(base62Variants(item.base62))),
         DataCell(_buildVariantTable(base64Variants(item.base64))),
         DataCell(_buildVariantTable(base85Variants(item.base85))),
         DataCell(SelectableText(item.base91, style: monoStyle, maxLines: 1)),
@@ -601,6 +603,14 @@ class _UuidDataTableState extends State<UuidDataTable> {
     return [
       MapEntry('bitcoin', base58.bitcoin),
       MapEntry('ncname', base58.ncname),
+    ];
+  }
+
+  /// Extracts Base62 encoding variants.
+  List<MapEntry<String, String>> base62Variants(Base62Encoding base62) {
+    return [
+      MapEntry('sort', base62.sort),
+      MapEntry('ieee', base62.ieee),
     ];
   }
 
