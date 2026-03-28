@@ -79,14 +79,16 @@ class Base62Encoding {
   const Base62Encoding({
     required this.sort,
     required this.ieee,
+    required this.base62id,
   });
 
   final String sort;
   final String ieee;
+  final String base62id;
 
   @override
   String toString() {
-    return '$sort (sort)\n$ieee (ieee)';
+    return '$sort (sort)\n$ieee (ieee)\n$base62id (base62id)';
   }
 }
 

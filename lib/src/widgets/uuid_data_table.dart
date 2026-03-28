@@ -611,6 +611,7 @@ class _UuidDataTableState extends State<UuidDataTable> {
     return [
       MapEntry('sort', base62.sort),
       MapEntry('ieee', base62.ieee),
+      MapEntry('base62id', base62.base62id),
     ];
   }
 

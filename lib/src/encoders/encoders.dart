@@ -13,6 +13,7 @@
 library;
 
 export 'base45_uuid.dart';
+export 'base62id_uuid.dart';
 export 'base64_uuid.dart';
 export 'base85_uuid.dart';
 export 'base91_uuid.dart';

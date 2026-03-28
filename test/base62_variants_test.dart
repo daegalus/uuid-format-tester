@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:b/b.dart';
-import '../lib/src/constants/alphabets.dart';
+import 'package:uuid_short_web/src/constants/alphabets.dart';
 
 void main() {
   group('Base62 Encoding Variants Tests', () {

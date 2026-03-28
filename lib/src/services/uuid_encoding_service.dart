@@ -110,10 +110,12 @@ class UuidEncodingService {
         from: base16.toLowerCase(), to: base62SortAlphabet)(uuidNoDashes);
     final ieee = BaseConversion(
         from: base16.toLowerCase(), to: base62IeeeAlphabet)(uuidNoDashes);
+    final base62id = encodeBase62Id(uuidNoDashes);
 
     return Base62Encoding(
       sort: sort,
       ieee: ieee,
+      base62id: base62id,
     );
   }
 
