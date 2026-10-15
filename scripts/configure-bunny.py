@@ -1,6 +1,7 @@
 """Preserve module MIME types and revalidate Flutter's unversioned bundles."""
 import json
 import os
+import time
 import urllib.request
 
 PULL_ZONE_ID = 3390951
@@ -45,7 +46,26 @@ def configure():
             rule["Guid"] = existing["Guid"]
         rule.update(Enabled=True, TriggerMatchingType=0)
         api(path + "/edgerules/addOrUpdate", "POST", rule)
+    # Sites creates extension-specific cache rules on every publish. They take
+    # precedence over the catch-all rule, so keep those rules at zero too.
+    for existing in api(path)["EdgeRules"]:
+        if existing.get("Description", "").startswith("bunny sites: browser-cache static assets"):
+            assert existing["ActionType"] == 16
+            existing["ActionParameter1"] = "0"
+            api(path + "/edgerules/addOrUpdate", "POST", existing)
     api(path + "/purgeCache", "POST")
+    deadline = time.monotonic() + 90
+    for filename in ["main.dart.mjs", "main.dart.wasm", "main.dart.js"]:
+        while True:
+            request = urllib.request.Request("https://uuidformattester.b-cdn.net/" + filename, method="HEAD")
+            with urllib.request.urlopen(request, timeout=20) as response:
+                fresh = "max-age=0" in response.headers.get("Cache-Control", "")
+                mime_ok = not filename.endswith(".mjs") or "javascript" in response.headers.get("Content-Type", "")
+            if fresh and mime_ok:
+                break
+            if time.monotonic() >= deadline:
+                raise RuntimeError("Flutter MIME/cache verification failed: " + filename)
+            time.sleep(3)
     print("Flutter MIME and browser revalidation rules applied.")
 
 
