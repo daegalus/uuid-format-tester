@@ -1,0 +1,46 @@
+name: Build and deploy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: bunny-sites-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.35.7"
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter test
+      - run: bash build_web.sh --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-build
+          path: build/web
+          include-hidden-files: true
+          retention-days: 7
+      - uses: BunnyWay/actions/deploy-site@deploy-site_0.1.1
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        with:
+          site: uuid-format-tester
+          directory: build/web
+          api_key: ${{ secrets.BUNNYNET_API_KEY }}
+          cli_version: "0.19.0"
+      - name: Keep Flutter module MIME and revalidation rules
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          BUNNYNET_API_KEY: ${{ secrets.BUNNYNET_API_KEY }}
+        run: python3 scripts/configure-bunny.py

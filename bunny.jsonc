@@ -1,0 +1,8 @@
+{
+  "sites": {
+    "name": "uuid-format-tester",
+    "build": "bash build_web.sh --release",
+    "dir": "build/web",
+    "spa": true
+  }
+}
